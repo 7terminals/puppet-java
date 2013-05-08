@@ -5,8 +5,9 @@ java
 Overview
 --------
 
-The Java module installs the JDK and JRE.
+The Java module installs the JDK and JRE. Modification of the original module by 7terminals, adding Suse as supported osgroup. 
 
+Tested with jdk-7u21-linux-x64 on OpenSuSE 12.1 x64, using Puppet v2.7.6.
 
 Module Description
 -------------------
@@ -31,6 +32,18 @@ To deploy JDK-6u35-x64 to /home/example.com/apps/jdk-6u35 and append JAVA_HOME t
       deploymentdir => '/home/example.com/apps/jdk-6u35',
       user          => 'example.com',
       pathfile      => '/home/example.com/.bashrc'
+    }
+
+### OpenSuSE
+
+To install globally in /usr/lib64/jvm/oracle-jdk7 with environment configured via /etc/profile.local:
+
+    java::setup {'jdk-7u21-linux-x64':
+      source => 'jdk-7u21-linux-x64.tar.gz',
+      deploymentdir => '/usr/lib64/jvm/oracle-jdk7',
+      user => 'root',
+      pathfile => '/etc/profile.local',
+      cachedir => "/tmp/java-setup-${name}"
     }
 
 Usage
@@ -78,6 +91,7 @@ The module has been tested on:
 * CentOS 6.4
 * Debian 6.0 
 * Ubuntu 12.04
+* OpenSuSE 12.1 (x64)
 
 Testing on other platforms has been light and cannot be guaranteed. 
 

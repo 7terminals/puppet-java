@@ -9,6 +9,7 @@ define java::setup (
   case $::osfamily {
     Debian  : { $supported = true }
     RedHat  : { $supported = true }
+    Suse    : { $supported = true }
     default : { fail("The ${module_name} module is not supported on ${::osfamily} based systems") }
   }
 
@@ -51,7 +52,7 @@ define java::setup (
     }
 
     file { "${cachedir}/${source}":
-      source  => "puppet:///modules/${mod_name}/${source}",
+      source  => "puppet:///modules/java/${source}",
       require => File[$cachedir],
     }
 

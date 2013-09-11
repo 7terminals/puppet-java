@@ -44,17 +44,16 @@ define java::setup (
 
   # When ensure => present
   if ($ensure == 'present') {
-    file { $cachedir:
-      ensure => 'directory',
-      owner  => 'root',
-      group  => 'root',
-      mode   => '644'
+    exec { "create-${cachedir}":
+      cwd     => '/',
+      command => "mkdir -p ${cachedir}",
+      creates => $cachedir,
     }
 
     file { "${cachedir}/${source}":
       source  => "puppet:///modules/${mod_name}/${source}",
       mode    => '711',
-      require => File[$cachedir],
+      require => Exec["create-${cachedir}"],
     }
 
     if ('.bin' in $source) {

@@ -108,6 +108,13 @@ define java::setup (
       unless  => "grep 'export CLASSPATH=\$JAVA_HOME/lib/classes.zip' ${pathfile}",
       require => Exec["set_java_home-${name}"],
     }
+
+    exec { "remove_java_cache":
+      command => "/bin/rm -rf ${cacheDir}",
+      require => Exec["move_java-${name}"],
+    }
+
+
   } else {
     file { $deploymentdir:
       ensure  => absent,
